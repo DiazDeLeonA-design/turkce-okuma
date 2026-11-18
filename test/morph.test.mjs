@@ -1,0 +1,16 @@
+import {analyze} from '../js/morph.js';
+import {splitSentences} from '../js/text.js';
+import assert from 'node:assert/strict';
+const top=(w,root)=>{const c=analyze(w).find(x=>x.root===root);assert.ok(c,w+' -> '+root);return c.parts.map(p=>p.surface+'/'+p.key).join('+')};
+assert.equal(top('evlerimizde','ev'),'ler/pl+imiz/poss1pl+de/loc');
+assert.equal(top('kitaplarda','kitap'),'lar/pl+da/loc');
+assert.equal(top('gidiyorum','git'),'iyor/prog+um/poss1sg');
+assert.equal(top('yapacağım','yap'),'acağ/fut_g+ım/poss1sg');
+assert.equal(top('okudular','oku'),'du/past+lar/pl');
+assert.equal(top('çocuğuna','çocuk'),'u/poss3+na/dat_n');
+assert.equal(top('gelmiyor','gel'),'mi/neg_i+yor/prog');
+assert.equal(top('başlıyor','başla'),'ıyor/prog');
+assert.equal(top('eşekten','eşek'),'ten/abl');
+assert.equal(top('gelmek','gel'),'mek/inf');
+assert.deepEqual(splitSentences('Hoca güldü. “Neden?” dedi. – Bilmem, dedi Dr. Ali. Sonra gitti!'),['Hoca güldü.','“Neden?” dedi.','– Bilmem, dedi Dr. Ali.','Sonra gitti!']);
+console.log('morph + sentence tests OK');
