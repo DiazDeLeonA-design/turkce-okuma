@@ -86,3 +86,24 @@ All lyrics are traditional/anonymous (tagged "Anonim metinler" on Turkish Wikiso
 - **Ninniler (lullabies)** (Ninni (lullabies), A1) — https://tr.wikisource.org/wiki/Ninni_ninni_ninnice, https://tr.wikisource.org/wiki/Ninni_çaldım_beşiğine, https://tr.wikisource.org/wiki/Kavak_gibi_boylanasın_ninni, https://tr.wikisource.org/wiki/Ninni_de_ninni_demekten — video: search link only
 
 Not bundled: "Daha dün annemizin", "Arı Vız Vız Vız", "Bir Kişi Bir Kişi" (no verifiable anonymous/public-domain source found), "Gesi Bağları" (lyrics unsuitable).
+
+## Videos (data/videos.json)
+Only full episodes/tales from the OFFICIAL channels that publish them: TRT Çocuk (@trtcocuk), Rafadan Tayfa (@rafadantayfaofficial), Niloya (@niloyatv), Pepee (@pepeedunyasi). Videos are streamed through the YouTube IFrame API (nothing is downloaded or re-hosted). build/fetch_videos.py checks every ID with YouTube oEmbed (exists, embeddable, author_url equals the expected official channel). No public-domain films are included.
+Transcripts: build/fetch_captions.py (yt-dlp, no cookies) can bundle Turkish captions into data/captions/<id>.json. None are bundled yet because YouTube blocks the build machine's IP; users can paste .srt/.vtt text per video in the app.
+
+- **Niloya - 1. - 13. Bölümler** — Niloya (A1, Cartoon) — https://www.youtube.com/watch?v=SXyoCF8HxwE
+- **Pepee 4 Bölüm Bir Arada - Pepe Eğitici Çizgi Film & Çocuk Şarkıları | Düşyeri** — Pepee (A1, Cartoon) — https://www.youtube.com/watch?v=BVM1bC_s_XM
+- **Masal Kitabı - Aslan ile Fare** — TRT Çocuk (A1, Fable) — https://www.youtube.com/watch?v=Ywpudy3yN4Y
+- **Masal Kitabı - Kibirli Karga** — TRT Çocuk (A1, Fable) — https://www.youtube.com/watch?v=0vkI0IGP2Bo
+- **Çocukçuf | 69.Bölüm | Sayılar** — TRT Çocuk (A2, Kids show) — https://www.youtube.com/watch?v=su2enN1kTMc
+- **Pırıl | Efe Ders Çalışıyor** — TRT Çocuk (A2, Cartoon) — https://www.youtube.com/watch?v=i6CaSebAFTU
+- **Tuhafiye | 1.Bölüm** — TRT Çocuk (A2, Cartoon) — https://www.youtube.com/watch?v=ln-GIGLqGcU
+- **Çocukçuf | 12.Bölüm | Mevsimler** — TRT Çocuk (A2, Kids show) — https://www.youtube.com/watch?v=HO68xQvs2TY
+- **Rafadan Tayfa | Bayrak Kapmaca** — TRT Çocuk (B1, Cartoon) — https://www.youtube.com/watch?v=WP9soQviMXM
+- **Rafadan Tayfa | Hıçkırık** — TRT Çocuk (B1, Cartoon) — https://www.youtube.com/watch?v=4NgeB8fC6jY
+- **Rafadan Tayfa 82. Bölüm Tamtam'ın Dönüşü** — Rafadan Tayfa (B1, Cartoon) — https://www.youtube.com/watch?v=5-mb0mLaF68
+- **Kız Kulesi Masalları | Kıymetli Kediler | Hikmet Körmükçü** — TRT Çocuk (B1, Tale) — https://www.youtube.com/watch?v=Mn8jDBdvoHs
+- **Keloğlan - İsraf** — TRT Çocuk (B1, Cartoon) — https://www.youtube.com/watch?v=dvXcSC3vmPk
+- **Keloğlan - Üzgün Ağaç** — TRT Çocuk (B1, Cartoon) — https://www.youtube.com/watch?v=ox4tIavTxuw
+- **Keloğlan - Nasreddin Hoca** — TRT Çocuk (B1, Cartoon) — https://www.youtube.com/watch?v=tdrQOQ1rMoA
+- **Keloğlan - Hayalet Madenci** — TRT Çocuk (B2, Cartoon) — https://www.youtube.com/watch?v=sXrs4gWvyLA

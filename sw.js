@@ -1,6 +1,6 @@
-const VER='tr-reader-v3';
+const VER='tr-reader-v4';
 const SHELL=['./','index.html','css/style.css','manifest.webmanifest','icons/icon.svg','icons/icon-192.png','icons/icon-512.png','icons/apple-touch-icon.png',
- 'js/app.js','js/store.js','js/ui.js','js/tts.js','js/text.js','js/morph.js','js/dict.js','js/popup.js','js/reader.js','js/scenes.js','js/scenes-data.js','js/practice.js','js/songs.js','data/books.json','data/songs.json'];
+ 'js/app.js','js/store.js','js/ui.js','js/tts.js','js/text.js','js/morph.js','js/dict.js','js/popup.js','js/reader.js','js/scenes.js','js/scenes-data.js','js/practice.js','js/songs.js','js/videos.js','data/books.json','data/songs.json','data/videos.json'];
 self.addEventListener('install',e=>{
   e.waitUntil((async()=>{
     const c=await caches.open(VER); await c.addAll(SHELL);

@@ -4,6 +4,7 @@ import {settings,ls,bump} from './store.js';
 import {translate} from './dict.js';
 import {openWordSheet} from './popup.js';
 import * as tts from './tts.js';
+import {mediaTabs} from './videos.js';
 
 let SONGS=[];
 export async function loadSongs(){try{SONGS=await (await fetch('data/songs.json')).json()}catch(e){console.error(e);SONGS=[]}}
@@ -26,7 +27,7 @@ export function parseLyrics(text){
 export function songList(root,nav){
   const songs=allSongs();
   root.replaceChildren(
-    h('div',{class:'page-h'},h('h1',null,'Songs 🎵'),h('p',{class:'sub'},'Traditional Turkish folk songs, lullabies and children’s songs. Tap words, hear lines, sing along.')),
+    h('div',{class:'page-h'},mediaTabs('songs'),h('h1',null,'Songs 🎵'),h('p',{class:'sub'},'Traditional Turkish folk songs, lullabies and children’s songs. Tap words, hear lines, sing along.')),
     h('button',{class:'btn wide',id:'btn-add-song',onclick:()=>addSong(nav)},'＋ Add your own lyrics'),
     h('div',{class:'books'},songs.map(s=>h('a',{class:'book song',href:'#/song/'+s.id,'data-id':s.id},
       h('span',{class:'lv',style:{background:LV[s.level]||'#888'}},s.level),

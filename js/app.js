@@ -7,6 +7,7 @@ import {parsePasted,wordCount,buildSentences} from './text.js';
 import * as tts from './tts.js';
 import {SCENES} from './scenes-data.js';
 import {loadSongs,songList,songView,bundledSongs} from './songs.js';
+import {loadVideos,videoList,videoView,stopVideo,bundledVideos} from './videos.js';
 
 applyTheme();
 let BOOKS=[];
@@ -41,6 +42,7 @@ function home(){
       h('a',{class:'big-btn',href:'#/library'},'📚',h('b',null,'Read a story'),h('small',null,'Library')),
       h('a',{class:'big-btn',href:'#/scenes'},'🖼',h('b',null,'Picture words'),h('small',null,'Tap & learn')),
       h('a',{class:'big-btn',href:'#/songs'},'🎵',h('b',null,'Songs'),h('small',null,'sing along')),
+      h('a',{class:'big-btn',href:'#/videos'},'🎬',h('b',null,'Videos'),h('small',null,'cartoons & tales')),
       h('a',{class:'big-btn',href:'#/practice'},'🧠',h('b',null,due?`Practice (${due})`:'Practice'),h('small',null,due?'cards due':'flashcards & quiz')),
       h('a',{class:'big-btn',href:'#/vocab'},'🔖',h('b',null,'My words'),h('small',null,v.length+' saved'))));
   setNav('home');
@@ -109,6 +111,7 @@ function about(){
     h('div',{class:'prose'},
       h('p',null,'All texts were fetched from ',h('a',{href:'https://tr.wikisource.org',target:'_blank',rel:'noopener'},'Turkish Wikisource'),', which only hosts public-domain or freely licensed works.'),
       h('ul',{class:'srcs'},BOOKS.map(b=>h('li',null,h('b',null,b.title),' — '+b.author+'. ',h('span',{class:'lic'},b.license+'. '),(b.pages||[]).slice(0,1).map(u=>h('a',{href:u,target:'_blank',rel:'noopener'},'source ↗')),(b.pages||[]).length>1?` (+${b.pages.length-1} more pages)`:''))),
+      h('h3',null,'Videos'),h('p',null,'Videos are embedded from the official YouTube channels that publish them (TRT Çocuk, Rafadan Tayfa, Niloya, Pepee). Nothing is downloaded or re-hosted, and every ID was checked with YouTube’s oEmbed (exists + embeddable).'),h('ul',{class:'srcs'},bundledVideos().map(x=>h('li',null,h('b',null,x.title),' — ',h('a',{href:x.channelUrl,target:'_blank',rel:'noopener'},x.channel+' ↗'),' · ',h('a',{href:'https://www.youtube.com/watch?v='+x.ytId,target:'_blank',rel:'noopener'},'watch ↗')))),
       h('h3',null,'Songs'),h('p',null,'Lyrics are traditional/anonymous Turkish folk songs, lullabies and children’s songs (tagged “Anonim metinler” on Turkish Wikisource); videos are YouTube embeds of third-party recordings (the recording belongs to its performer — only the traditional words are bundled).'),h('ul',{class:'srcs'},bundledSongs().map(x=>h('li',null,h('b',null,x.title),' — '+x.kind+'. ',h('a',{href:x.source.split(', ')[0],target:'_blank',rel:'noopener'},'lyrics source ↗')))),
       h('h3',null,'Pictures'),h('p',null,'Picture scenes use emoji artwork from ',h('a',{href:'https://openmoji.org',target:'_blank',rel:'noopener'},'OpenMoji'),' (© HfG Schwäbisch Gmünd, licence CC BY-SA 4.0) placed in backgrounds drawn for this app.'),
       h('h3',null,'Dictionary & translation'),h('p',null,'Definitions: English ',h('a',{href:'https://en.wiktionary.org',target:'_blank',rel:'noopener'},'Wiktionary'),' (CC BY-SA). Machine translation: free public Google Translate web endpoints, falling back to MyMemory. Machine translation can be wrong — especially for single words out of context. Word breakdowns are rule-based best guesses.'),
@@ -136,7 +139,7 @@ function openSettings(){
 const lab=(t,el)=>h('label',{class:'lab'},h('span',null,t),el);
 // ---------- Router
 function route(){
-  stopReader(); tts.cancel(); closeSheet(); flushCache();
+  stopReader(); stopVideo(); tts.cancel(); closeSheet(); flushCache();
   const hash=location.hash||'#/'; const [,p,id]=hash.match(/^#\/([^/]*)\/?(.*)$/)||[];
   document.body.dataset.page=p||'home';
   window.scrollTo(0,0);
@@ -153,11 +156,13 @@ function route(){
     if(p==='scene'){setNav('scenes');return sceneView(view,id,nav)}
     if(p==='songs'){setNav('songs');return songList(view,nav)}
     if(p==='song'){setNav('songs');return songView(view,decodeURIComponent(id),nav)}
+    if(p==='videos'){setNav('songs');return videoList(view,nav)}
+    if(p==='video'){setNav('songs');return videoView(view,decodeURIComponent(id),nav)}
     if(p==='about') return about();
     home();
   }catch(e){console.error(e);view.textContent='Something went wrong: '+e.message}
 }
-const ready=Promise.all([loadBooks(),loadSongs()]);
+const ready=Promise.all([loadBooks(),loadSongs(),loadVideos()]);
 window.addEventListener('hashchange',()=>ready.then(route));
 await ready;
 route();
